@@ -29,9 +29,12 @@ const port = process.env.PORT ? parseInt(process.env.PORT, 10) : 3000;
 await app.listen(port, '0.0.0.0');
 console.log(`Application is running on port: ${port}`);
 
+// Capturar señales de cierre para evitar que Railway mate el contenedor bruscamente
+  process.on('SIGTERM', async () => {
+    console.log('SIGTERM recibido. Cerrando la aplicación ordenadamente...');
+    await app.close();
+    process.exit(0);
+  });
 }
 
-bootstrap().catch((err) => {
-  console.error('Error durante la inicialización:', err);
-  process.exit(1);
-});
+bootstrap();
