@@ -3,6 +3,6 @@
 import { ConfigService } from '@nestjs/config';
 
 export const CORS_OPTIONS = {
-  origin: this.configService.get<string>('CORS');
+  origin: this.configService.get<string>('CORS'),
   credentials: true,
 };
