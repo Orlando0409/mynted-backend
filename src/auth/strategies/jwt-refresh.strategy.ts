@@ -19,10 +19,17 @@ export class JwtRefreshStrategy extends PassportStrategy(
   'jwt-refresh',
 ) {
   constructor(configService: ConfigService) {
+    const refreshSecret =
+      process.env.JWT_REFRESH_SECRET ||
+      configService.get<string>('JWT_REFRESH_SECRET');
+    if (!refreshSecret) {
+      throw new Error('Missing required environment variable JWT_REFRESH_SECRET');
+    }
+
     super({
       jwtFromRequest: refreshCookieExtractor,
       ignoreExpiration: false,
-      secretOrKey: process.env.JWT_REFRESH_SECRET || configService.get('JWT_REFRESH_SECRET')!,
+      secretOrKey: refreshSecret,
     });
   }
 
