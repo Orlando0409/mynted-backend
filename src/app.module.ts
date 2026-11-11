@@ -44,7 +44,7 @@ import { ModerationActionsModule } from './moderation-actions/moderation-actions
         autoLoadEntities: true,
 
         // Solo desarrollo
-        synchronize: true,
+        synchronize: false,
       }),
     }),
     // SellersModule antes que UsersModule: ambos comparten el prefijo
