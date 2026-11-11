@@ -24,6 +24,14 @@ async function bootstrap() {
 
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api', app, document);
+  
+  process.on('uncaughtException', (error) => {
+    console.error('CRASH INESPERADO (uncaughtException):', error);
+  });
+
+  process.on('unhandledRejection', (reason, promise) => {
+    console.error('RECHAZO NO MANEJADO (unhandledRejection):', promise, 'razón:', reason);
+  });
 
   const port = process.env.PORT ?? 3000;
   await app.listen(port, '0.0.0.0');
